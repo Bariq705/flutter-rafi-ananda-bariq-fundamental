@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,17 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Calculator',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Calculator'),
@@ -38,54 +30,189 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  // int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
+  // void _incrementCounter() {
+  //   setState(() {
  
-      _counter++;
+  //     _counter++;
+  //   });
+  // }
+  int num1 = 0, num2 = 0, sum = 0;
+
+  final TextEditingController t1 = new TextEditingController();
+  final TextEditingController t2 = new TextEditingController();
+
+  tambah() {
+    setState(() {
+      num1 = int.parse(t1.text);
+      num2 = int.parse(t2.text);
+      sum = num1 + num2;
+    });
+  }
+
+  kurang() {
+    setState(() {
+      num1 = int.parse(t1.text);
+      num2 = int.parse(t2.text);
+      sum = num1 - num2;
+    });
+  }
+
+  kali() {
+    setState(() {
+      num1 = int.parse(t1.text);
+      num2 = int.parse(t2.text);
+      sum = num1 * num2;
+    });
+  }
+
+  bagi() {
+    setState(() {
+      num1 = int.parse(t1.text);
+      num2 = int.parse(t2.text);
+      sum = num1 ~/ num2;
     });
   }
 
   @override
   Widget build(BuildContext context) {
 
+    var sum2 = sum;
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+      body: new Container(
+        padding: const EdgeInsets.all(45.0),
+        child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new Padding(
+              padding: const EdgeInsets.only(top: 25.0)
+            ),
+            new Text(
+              "Result : $sum2",
+              style: new TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+              ),
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(top: 35.0)
+            ),
+            new TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(hintText: "Enter Number 1" ),
+              controller: t1,
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(top: 25.0)
+            ),
+            new TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(hintText: "Enter Number 2" ),
+              controller: t2,
 
-            
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(top: 25.0)
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new MaterialButton(
+                   color: Colors.purpleAccent,
+                  child: new Text(
+                    "ADD",
+                    style: TextStyle(
+                      color: Color(0xffffffff),
+                    ),
+                    ),
+                    onPressed: () {
+                      tambah();
+                      t1.clear();
+                      t2.clear();
+                    },
+                    
+                  )
+              ],
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(top: 25.0)
+            ),
+             new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new MaterialButton(
+                   color: Colors.purpleAccent,
+                  child: new Text(
+                    "SUBSTRACT",
+                    style: TextStyle(
+                      color: Color(0xffffffff),
+                    ),
+                    ),
+                    onPressed: () {
+                      kurang();
+                      t1.clear();
+                      t2.clear();
+                    },
+                  )
+              ],
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(top: 25.0)
+            ),
+             new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new MaterialButton(
+                   color: Colors.purpleAccent,
+                  child: new Text(
+                    "MULTIPLY",
+                    style: TextStyle(
+                      color: Color(0xffffffff),
+                    ),
+                    ),
+                    onPressed: () {
+                      kali();
+                      t1.clear();
+                      t2.clear();
+                    },
+                  )
+              ],
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(top: 25.0)
+            ),
+             new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new MaterialButton(
+                   color: Colors.purpleAccent,
+                  child: new Text(
+                    "DIVIDE",
+                    style: TextStyle(
+                      color: Color(0xffffffff),
+                    ),
+                    ),
+                    onPressed: () {
+                      bagi();
+                      t1.clear();
+                      t2.clear();
+                    },
+                  )
+              ],
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
